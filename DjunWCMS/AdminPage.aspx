@@ -122,11 +122,12 @@
 
                 <asp:TemplateField HeaderText="Action">              
                     <ItemTemplate>
-                        <asp:LinkButton runat="server" ID="link" class="btn btn-info" CommandArgument='<%# Eval("account_id") %>' OnClick="link_Click"><i class="bi bi-pencil-square"></i> &nbsp;Edit</asp:LinkButton>
-                        <asp:LinkButton ID="ButtonDelete" runat="server" CommandName="Delete" class="btn btn-danger"> <i class="bi bi-trash"> &nbsp; Delete</i> </asp:LinkButton>
+                        <asp:LinkButton runat="server" ID="link" CommandArgument='<%# Eval("account_id") %>' OnClick="link_Click1">Edit</asp:LinkButton>
+                        <%--<asp:LinkButton runat="server" ID="link" class="btn btn-info" CommandArgument="<%# Eval("account_id") %>" OnClick="link_Click1" ><i class="bi bi-pencil-square" ></i> &nbsp;Edit</asp:LinkButton>--%>
+                        <asp:LinkButton ID="ButtonDelete" runat="server" OnClick="ButtonDelete_Click" CommandName="Delete" class="btn btn-danger"> <i class="bi bi-trash"> &nbsp;Delete</i> </asp:LinkButton>
                     </ItemTemplate>
                     <FooterTemplate>            
-                        <asp:LinkButton  runat="server" class="btn btn-info" id="linkAdd" CommandName="AddNew" ValidationGroup="validation"><i class="bi bi-person-plus"></i>&nbsp;Add New</asp:LinkButton>
+                        <asp:LinkButton  runat="server" OnClick="linkAdd_Click" class="btn btn-info" id="linkAdd" CommandName="AddNew" ValidationGroup="validation"><i class="bi bi-person-plus"></i>&nbsp;Add New</asp:LinkButton>
                     </FooterTemplate>
                  </asp:TemplateField>
             </Columns>
@@ -159,7 +160,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             &times;</button>
-                        <h4 class="modal-title">Collected Data</h4>
+                        <h4 class="modal-title text-center">Collected Data</h4>
                     </div>
                     <div class="modal-body">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
@@ -179,7 +180,7 @@
                                     placeholder="Enter a phone number"></asp:TextBox>
                             </div>
                             <div class="form-group mt-2">
-                                 <select class="form-select" id="DropDownList2" aria-label="Default select example">
+                                 <select class="form-select" id="selectType" aria-label="Default select example">
                                   <option selected ="selected">Open this select menu</option>
                                   <option value="1">Secretaire</option>
                                   <option value="2">Docteur</option>
