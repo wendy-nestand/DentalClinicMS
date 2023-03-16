@@ -30,7 +30,7 @@ namespace DjunWCMS
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT account_id, account_name, account_phone, account_creation_date FROM account", conn);
+                SqlCommand cmd = new SqlCommand("SELECT *  FROM account", conn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);
@@ -59,15 +59,15 @@ namespace DjunWCMS
         }
 
 
-        protected void Link_Click(object sender, EventArgs e)
-        {
-            LinkButton linkbutton = (LinkButton)sender;  // get the link button which trigger the event
-            GridViewRow row = (GridViewRow)linkbutton.NamingContainer; // get the GridViewRow that contains the linkbutton
-            txtUsename.Text = row.Cells[0].Text;  // get the first cell value of the row
-                                                // if you want to get controls in templatefield , just use row.FindControl
-           // lblmonth.Text = linkbutton.CommandArgument;
-            ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
-        }
+        //protected void Link_Click(object sender, EventArgs e)
+        //{
+        //    LinkButton linkbutton = (LinkButton)sender;  // get the link button which trigger the event
+        //    GridViewRow row = (GridViewRow)linkbutton.NamingContainer; // get the GridViewRow that contains the linkbutton
+        //    txtUsername.Text = row.Cells[0].Text;  // get the first cell value of the row
+        //                                        // if you want to get controls in templatefield , just use row.FindControl
+        //   // lblmonth.Text = linkbutton.CommandArgument;
+        //    ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
+        //}
 
 
         protected void gvDetails_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -88,6 +88,11 @@ namespace DjunWCMS
                 TextBox txtNotes = (TextBox)GridView1.FooterRow.FindControl("txtNotes");
                
             }
+
+            if (e.CommandName.Equals("Delete"))
+            {
+                
+            }
         }
 
         protected void gvDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -99,26 +104,23 @@ namespace DjunWCMS
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
-            TextBox txtUsername = (TextBox)GridView1.FooterRow.FindControl("txtUserName");
-            TextBox txtName = (TextBox)GridView1.FooterRow.FindControl("txtName");
-            TextBox txtPhone = (TextBox)GridView1.FooterRow.FindControl("txtPhone");
-            TextBox txtNotes = (TextBox)GridView1.FooterRow.FindControl("txtNotes");
-            TextBox txtPassword = (TextBox)GridView1.FooterRow.FindControl("txtPassword");
-
-            
+            //TextBox txtUsername = (TextBox)GridView1.FooterRow.FindControl("txtUserName");
+            //TextBox txtName = (TextBox)GridView1.FooterRow.FindControl("txtName");
+            //TextBox txtPhone = (TextBox)GridView1.FooterRow.FindControl("txtPhone");
+            //TextBox txtNotes = (TextBox)GridView1.FooterRow.FindControl("txtNotes");
+            //TextBox txtPassword = (TextBox)GridView1.FooterRow.FindControl("txtPassword");
 
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString);
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandText = "INSERT INTO [user] (user_name, user_password) VALUES (@username, @password)";
-            cmd.Parameters.AddWithValue("@username", txtUsername.Text);
-            cmd.Parameters.AddWithValue("@password", Utils.hashPass(txtPassword.Text));
+            //cmd.Parameters.AddWithValue("@username", txtUsername.Text);
+            //cmd.Parameters.AddWithValue("@password", Utils.hashPass(txtPassword.Text));
             con.Open();
             //
 
             if (cmd.ExecuteNonQuery() > 0)
             {
                 int id;
-                // add in user table
                 cmd.CommandText = "SELECT user_id FROM [user] WHERE user_name = @username";
 
                 id = (int)cmd.ExecuteScalar();
@@ -128,11 +130,11 @@ namespace DjunWCMS
                 cmd.Parameters.Clear();
 
 
-                cmd.Parameters.Add("@user_id", SqlDbType.Int).Value = id.ToString();
-                cmd.Parameters.AddWithValue("@name", Utils.dataScrubbing(txtName.Text));
-                cmd.Parameters.AddWithValue("@type", );
-                cmd.Parameters.AddWithValue("@notes", txtNoteAcc.Text);
-                cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                //cmd.Parameters.Add("@user_id", SqlDbType.Int).Value = id.ToString();
+                //cmd.Parameters.AddWithValue("@name", Utils.dataScrubbing(txtName.Text));
+                //cmd.Parameters.AddWithValue("@type", (ddlType.SelectedIndex) - 1);
+                //cmd.Parameters.AddWithValue("@notes", txtNotes.Text);
+                //cmd.Parameters.AddWithValue("@date", DateTime.Now);
 
 
             }
@@ -142,25 +144,76 @@ namespace DjunWCMS
             con.Close();
         }
 
-        protected void link_Click1(object sender, EventArgs e)
-        {
-            LinkButton linkbutton = (LinkButton)sender;  // get the link button which trigger the event
-            GridViewRow row = (GridViewRow)linkbutton.NamingContainer; // get the GridViewRow that contains the linkbutton
-            txtUsename.Text = row.Cells[0].Text;  // get the first cell value of the row
-                                                  // if you want to get controls in templatefield , just use row.FindControl
-                                                  // lblmonth.Text = linkbutton.CommandArgument;
-            ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
+        //protected void link_Click1(object sender, EventArgs e)
+        //{
+        //    LinkButton linkbutton = (LinkButton)sender;  // get the link button which trigger the event
+        //    GridViewRow row = (GridViewRow)linkbutton.NamingContainer; // get the GridViewRow that contains the linkbutton
+        //    txtUsername.Text = row.Cells[0].Text;  // get the first cell value of the row
+        //                                           // if you want to get controls in templatefield , just use row.FindControl
+        //                                           // lblmonth.Text = linkbutton.CommandArgument;
+        //    //txtUsername.Text = "Hello";
+        //    //ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
 
-        }
+        
+        //}
 
         protected void ButtonDelete_Click(object sender, EventArgs e)
         {
+            //GridView1.EditIndex = e
+            //Label txtAccountId = (Label)GridView1.Rows[e.NewEditIndex].FindControl("lblAccountId");
+            //Response.Write(txtAccountId.Text);
+            //Response.Redirect($"InfoPage.aspx?id={txtAccountId.Text}");
 
         }
 
         protected void linkAdd_Click(object sender, EventArgs e)
         {
 
+            Response.Redirect("InfoPage.aspx");
+
+        }
+
+        protected void gvEdit(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            Label txtAccountId = (Label)GridView1.Rows[e.NewEditIndex].FindControl("lblAccountId"); 
+            Response.Write(txtAccountId.Text);
+            Response.Redirect($"InfoPage.aspx?id={txtAccountId.Text}");
+            //txtUsername.Text = txtUsernameT.Text;
+            //ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
+
+        }
+
+        protected void BtnDelete_Click(object sender, EventArgs e)
+        {
+            //Label txtAccountId = (Label)GridView1.Rows[].FindControl("lblAccountId");
+        }
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // Deleting Rows
+            Label txtAccountId = (Label)GridView1.Rows[e.RowIndex].FindControl("lblAccountId");
+            
+
+            // Delete in database
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString);
+            SqlCommand cmd = con.CreateCommand();
+
+            cmd.CommandText = "DELETE FROM [account] WHERE account_id = @user_id";
+            cmd.Parameters.AddWithValue("@user_id", txtAccountId.Text);
+            con.Open();
+            
+            //if (cmd.ExecuteNonQuery() > 0)
+            //{
+            //    Response.Write("Deleted ok");
+            //}
+            //else
+            //{
+            //    Response.Write("Delete process Failed");
+            //}
+                 
+            con.Close();
+            BindGridview();
         }
     }
 }

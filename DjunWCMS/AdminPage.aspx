@@ -87,29 +87,37 @@
                         PageSize="5" AutoGenerateColumns="false"
                         DataKeyNames="account_id" 
                         OnPageIndexChanging="gvDetails_PageIndexChanging"
-                        OnRowCommand ="gvDetails_RowCommand">
+                        OnRowCommand ="gvDetails_RowCommand" OnRowEditing="gvEdit"
+                        OnRowDeleting="GridView1_RowDeleting"
+            >
 
              <PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" PreviousPageText="Back"
             NextPageText="Next" LastPageText="Last" />
             <Columns>
+
+                <asp:TemplateField HeaderText="Id">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountId" runat="server" Text='<%# Eval("account_id")%>'/>
+                    </ItemTemplate>
+                </asp:TemplateField>
        
                 <asp:TemplateField HeaderText="Name">
                     <ItemTemplate>
-                        <asp:Label ID="lblProductname" runat="server" Text='<%# Eval("account_name")%>'/>
+                        <asp:Label ID="lblAccountName" runat="server" Text='<%# Eval("account_name")%>'/>
                     </ItemTemplate>
                     
                 </asp:TemplateField>
 
                 <asp:TemplateField HeaderText = "Date">
                     <ItemTemplate>
-                        <asp:Label ID="lblPrice" runat="server" TextMode="Date" Text='<%# Eval("account_creation_date")%>'></asp:Label>
+                        <asp:Label ID="lblAccountCreationDate" runat="server" TextMode="Date" Text='<%# Eval("account_creation_date")%>'></asp:Label>
                     </ItemTemplate>
                     
                 </asp:TemplateField>
 
                  <asp:TemplateField HeaderText = "Phone">
                     <ItemTemplate>
-                        <asp:Label ID="lblRemarque" Width="100%" runat="server" Text='<%# Eval("account_phone")%>'></asp:Label>
+                        <asp:Label ID="lblAccountPhone" Width="100%" runat="server" Text='<%# Eval("account_phone")%>'></asp:Label>
                     </ItemTemplate>
                    
                 </asp:TemplateField>
@@ -122,9 +130,9 @@
 
                 <asp:TemplateField HeaderText="Action">              
                     <ItemTemplate>
-                        <asp:LinkButton runat="server" ID="link" CommandArgument='<%# Eval("account_id") %>' OnClick="link_Click1">Edit</asp:LinkButton>
+                        <asp:Button ID="btnEdit" CommandName="Edit" runat="server" Text="Edit" />
                         <%--<asp:LinkButton runat="server" ID="link" class="btn btn-info" CommandArgument="<%# Eval("account_id") %>" OnClick="link_Click1" ><i class="bi bi-pencil-square" ></i> &nbsp;Edit</asp:LinkButton>--%>
-                        <asp:LinkButton ID="ButtonDelete" runat="server" OnClick="ButtonDelete_Click" CommandName="Delete" class="btn btn-danger"> <i class="bi bi-trash"> &nbsp;Delete</i> </asp:LinkButton>
+                        <asp:LinkButton ID="BtnDelete" runat="server" OnClick="BtnDelete_Click" CommandName="Delete" class="btn btn-danger"> <i class="bi bi-trash"> &nbsp;Delete</i> </asp:LinkButton>
                     </ItemTemplate>
                     <FooterTemplate>            
                         <asp:LinkButton  runat="server" OnClick="linkAdd_Click" class="btn btn-info" id="linkAdd" CommandName="AddNew" ValidationGroup="validation"><i class="bi bi-person-plus"></i>&nbsp;Add New</asp:LinkButton>
@@ -153,60 +161,7 @@
 </div>
 
        <div>
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            &times;</button>
-                        <h4 class="modal-title text-center">Collected Data</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                            <div class="form-group mt-1">
-                                <asp:TextBox ID="txtUsename" placeholder="Enter a user name" CssClass="form-control" runat="server"></asp:TextBox>
-                               
-                            </div>
-                            <div class="form-group mt-2">
-                                <asp:TextBox ID="txtPassword" placeholder="Enter a password" CssClass="form-control" TextMode="Password" runat="server"></asp:TextBox>
-                            </div>
-                            <div class="form-group mt-2">
-                                <asp:TextBox ID="txtName" runat="server" TabIndex="3" MaxLength="75" CssClass="form-control"
-                                    placeholder="Enter your full name"></asp:TextBox>
-                            </div>
-                            <div class="form-group mt-2">
-                                <asp:TextBox ID="txtPhone" runat="server" TextMode="Phone" TabIndex="3" MaxLength="75" CssClass="form-control"
-                                    placeholder="Enter a phone number"></asp:TextBox>
-                            </div>
-                            <div class="form-group mt-2">
-                                 <select class="form-select" id="selectType" aria-label="Default select example">
-                                  <option selected ="selected">Open this select menu</option>
-                                  <option value="1">Secretaire</option>
-                                  <option value="2">Docteur</option>
-                                  <option value="3">Admin</option>
-                                </select>
-                            </div>
-
-                             <div class="form-group mt-2">
-                                <asp:TextBox ID="txtNotes" runat="server" TextMode="MultiLine" TabIndex="3" MaxLength="75" CssClass="form-control"
-                                    placeholder="Enter a comment"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" CssClass="btn btn-info" />
-                        <button type="button" class="btn btn-info" data-dismiss="modal">
-                            Close</button>
-                    </div>
-                </div>
-            </div>
-            <script type='text/javascript'>
-                function openModal() {
-                    $('[id*=myModal]').modal('show');
-                }
-            </script>
-        </div>
+      
         </div>
        </div>
         <!-- Fin New Code -->
