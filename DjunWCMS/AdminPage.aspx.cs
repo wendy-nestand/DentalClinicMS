@@ -78,7 +78,7 @@ namespace DjunWCMS
                 //LinkButton linkbutton = (LinkButton)sender;  // get the link button which trigger the event
                 //GridViewRow row = (GridViewRow)linkbutton.NamingContainer; // get the GridViewRow that contains the linkbutton
                 //txtUsename.Text = row.Cells[0].Text;  // get the first cell value of the row
-                // if you want to get controls in templatefield , just use row.FindControl
+                // if you want to get controls in templatefield, just use row.FindControl
                 // lblmonth.Text = linkbutton.CommandArgument;
                 ScriptManager.RegisterStartupScript(this, GetType(), "displayalertmessage", "$('#myModal').modal()", true);//show the modal
 
