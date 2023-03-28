@@ -24,6 +24,11 @@ namespace DjunWCMS
         {
             if (!IsPostBack)
             {
+                if (Request.QueryString["type"].Equals("secretary"))
+                {
+                    txtPassword.Visible = false;
+                    txtUsername.Visible = false;  
+                }
                 id = Request.QueryString["id"];
                 if (id != null)
                 {
@@ -39,7 +44,15 @@ namespace DjunWCMS
             // The id already null befor its call..for an edit action.
             if(id == string.Empty) 
             {
-                AddNewInfo();  
+                if (Request.QueryString["type"].Equals("secretary"))
+                {
+                    AddNewPatientInfo();
+                }
+                else
+                {
+                    AddNewInfo();
+                }
+                 
             }
             else
             {
@@ -70,6 +83,15 @@ namespace DjunWCMS
             }
 
             con.Close();
+
+        }
+
+        public void EditPatientProfile()
+        {
+            string connection = ConfigurationManager.ConnectionStrings["connectionStrings"].ConnectionString;
+            SqlConnection con = new SqlConnection(connection);
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = "";
 
         }
 
@@ -108,6 +130,26 @@ namespace DjunWCMS
             catch(Exception ex)
             {
                 Response.Write("Error: " + ex.Message);
+            }
+
+        }
+
+
+        public void AddNewPatientInfo()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+            SqlConnection con = new SqlConnection(connectionString);
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = " INSERT INTO [account] (account_user_id, account_name, account_type, account_notes, account_creation_date, account_phone) VALUES (@name, @type, @notes, @date, @phone)";
+            con.Open(); 
+            cmd.Parameters.AddWithValue("@name", txtName.Text);
+            cmd.Parameters.AddWithValue("@type", txtType.Text);
+            cmd.Parameters.AddWithValue("@notes", txtNotes.Text);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("MM/dd/aaaa"));
+
+            if (cmd.ExecuteNonQuery() > 0)
+            {
+                Response.Write("Inserted successfully");
             }
 
         }

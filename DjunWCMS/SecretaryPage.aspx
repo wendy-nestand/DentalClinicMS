@@ -73,7 +73,80 @@
                         <asp:Button CssClass="button-container bg-gradient border-0  " ID="btnReservation" runat="server" Text="Reservation"  />
                     </div>
 
+                     <asp:GridView ID="GridView1" Width="100%" border="0" CellPadding="0" Class="table table-responsive"
+                        HeaderStyle-BackColor="#0099cc" 
+                        HeaderStyle-ForeColor="White" 
+                        ForeColor="#333333"
+                        GridLines="None" runat="server" 
+                        ShowFooter="true" AllowPaging="true" 
+                        PageSize="5" AutoGenerateColumns="false"
+                        DataKeyNames="account_id" 
+                        OnPageIndexChanging="gvDetails_PageIndexChanging"
+                        OnRowCommand="GridView1_RowCommand" OnRowEditing="gvEdit"
+                        OnRowDeleting="GridView1_RowDeleting"
+            >
 
+             <PagerSettings Mode="NextPreviousFirstLast" FirstPageText="First" PreviousPageText="Back"
+            NextPageText="Next" LastPageText="Last" />
+                         <Columns>
+
+                <asp:TemplateField HeaderText="Id">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountId" runat="server" Text='<%# Eval("account_id")%>'/>
+                    </ItemTemplate>
+                </asp:TemplateField>
+       
+                <asp:TemplateField HeaderText="Name">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountName" runat="server" Text='<%# Eval("account_name")%>'/>
+                    </ItemTemplate>
+                    
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText = "Date">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountCreationDate" runat="server" TextMode="Date" Text='<%# Eval("account_creation_date")%>'></asp:Label>
+                    </ItemTemplate>
+                    
+                </asp:TemplateField>
+
+                 <asp:TemplateField HeaderText = "Phone">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountPhone" Width="100%" runat="server" Text='<%# Eval("account_phone")%>'></asp:Label>
+                    </ItemTemplate>
+                   
+                </asp:TemplateField>
+
+               <%-- <asp:TemplateField HeaderText="Action">
+                   <ItemTemplate >
+                        <asp:LinkButton runat="server" ID="link" CommandArgument='<%# Eval("account_id") %>' OnClick="link_Click">Edit</asp:LinkButton>
+                   </ItemTemplate>
+               </asp:TemplateField>--%>
+
+                <asp:TemplateField HeaderText="Action">              
+                    <ItemTemplate>
+                        <asp:Button ID="btnEdit" CommandName="Edit" runat="server" Text="Edit" />
+                        <%--<asp:LinkButton runat="server" ID="link" class="btn btn-info" CommandArgument="<%# Eval("account_id") %>" OnClick="link_Click1" ><i class="bi bi-pencil-square" ></i> &nbsp;Edit</asp:LinkButton>--%>
+                        <asp:LinkButton ID="BtnDelete" runat="server" OnClick="BtnDelete_Click" CommandName="Delete" class="btn btn-danger"> <i class="bi bi-trash"> &nbsp;Delete</i> </asp:LinkButton>
+                    </ItemTemplate>
+                    <FooterTemplate>            
+                        <asp:LinkButton  runat="server" OnClick="linkAdd_Click" class="btn btn-info" id="linkAdd" CommandName="AddNew" ValidationGroup="validation"><i class="bi bi-person-plus"></i>&nbsp;Add New</asp:LinkButton>
+                    </FooterTemplate>
+                 </asp:TemplateField>
+            </Columns>
+
+            <EditRowStyle BackColor="#787777" />
+                                <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True"></HeaderStyle>
+                                <PagerStyle BackColor="#666666" CssClass="cssPager" ForeColor="White" HorizontalAlign="Center" />
+                                <RowStyle BackColor="#E3EAEB" />
+                                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                                <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                                <SortedAscendingHeaderStyle BackColor="#246B61" />
+                                <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                                <SortedDescendingHeaderStyle BackColor="#15524A" />  
+
+        </asp:GridView>   
                 
 
         </div>

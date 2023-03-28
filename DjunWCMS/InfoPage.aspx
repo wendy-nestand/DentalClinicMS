@@ -46,7 +46,7 @@
                                 <asp:ListItem>Secretaire </asp:ListItem>  
                                 <asp:ListItem>Docteur</asp:ListItem>  
                                 <asp:ListItem>Admin</asp:ListItem>  
-                                
+                                <asp:ListItem>Patient</asp:ListItem>  
                             </asp:DropDownList> 
                             </div>
                              <div class="form-group mt-2">
