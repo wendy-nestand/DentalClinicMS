@@ -69,8 +69,8 @@
                  <h2 class="text-success fw-bold text-center">Secretary Panel </h2>
                  <hr class="bg-primary"/>
                     <div class="row">
-                        <asp:Button ID="btnPatientProfile" runat="server" Text="Client"  />
-                        <asp:Button CssClass="button-container bg-gradient border-0  " ID="btnReservation" runat="server" Text="Reservation"  />
+                        <asp:Button ID="btnPatientProfile" runat="server" Text="Client" OnClick="btnPatientProfile_Click"  />
+                        <asp:Button CssClass="button-container bg-gradient border-0  " ID="btnReservation" runat="server" Text="Reservation" OnClick="btnReservation_Click"  />
                     </div>
 
                      <asp:GridView ID="GridView1" Width="100%" border="0" CellPadding="0" Class="table table-responsive"
@@ -113,6 +113,13 @@
                  <asp:TemplateField HeaderText = "Phone">
                     <ItemTemplate>
                         <asp:Label ID="lblAccountPhone" Width="100%" runat="server" Text='<%# Eval("account_phone")%>'></asp:Label>
+                    </ItemTemplate>
+                   
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText = "Type">
+                    <ItemTemplate>
+                        <asp:Label ID="lblAccountType" Width="100%" runat="server" Text='<%# Eval("account_type")%>'></asp:Label>
                     </ItemTemplate>
                    
                 </asp:TemplateField>

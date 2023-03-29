@@ -42,10 +42,8 @@
                                   <option value="3">Admin</option>
                                 </asp:select>--%>
                                 <asp:DropDownList ID="ddlType" runat="server" >  
-                                <asp:ListItem ID="txtType" Value="">Please Select</asp:ListItem>  
                                 <asp:ListItem>Secretaire </asp:ListItem>  
                                 <asp:ListItem>Docteur</asp:ListItem>  
-                                <asp:ListItem>Admin</asp:ListItem>  
                                 <asp:ListItem>Patient</asp:ListItem>  
                             </asp:DropDownList> 
                             </div>
