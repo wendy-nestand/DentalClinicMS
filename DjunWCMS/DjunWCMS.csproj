@@ -85,6 +85,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="DoctorPage.aspx" />
+    <Content Include="InfoPage.aspx" />
     <Content Include="LoginPage.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -112,6 +113,13 @@
     </Compile>
     <Compile Include="DoctorPage.aspx.designer.cs">
       <DependentUpon>DoctorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InfoPage.aspx.cs">
+      <DependentUpon>InfoPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InfoPage.aspx.designer.cs">
+      <DependentUpon>InfoPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.aspx.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
