@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,25 +17,41 @@ namespace DjunWCMS
     public partial class InfoPage : System.Web.UI.Page
     {
         static string id;
+        static string ptype;
+        static string accountType;
+        static string query;
         //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionStrings"].ConnectionString);
-
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["type"].Equals("secretary"))
-                {
-                    txtPassword.Visible = false;
-                    txtUsername.Visible = false;  
-                }
                 id = Request.QueryString["id"];
+                ptype = Request.QueryString["type"];
+                accountType = Request.QueryString["accountType"];
+
+                if(ptype != null)
+                {
+                    if (ptype.Equals("secretary"))
+                    {
+                        txtPassword.Visible = false;
+                        txtUsername.Visible = false;
+                    }
+                    else
+                    {
+                        txtPassword.Visible = true;
+                        txtUsername.Visible = true;
+
+                    }
+                }
+               
                 if (id != null)
                 {
                     txtName.Text = id;
                     GetInfoInDatabaseWithId(id);
                 }
+                
+                
                 
             }
         }
@@ -42,9 +59,9 @@ namespace DjunWCMS
         protected void btnSave_Click(object sender, EventArgs e)
         {
             // The id already null befor its call..for an edit action.
-            if(id == string.Empty) 
+            if(id == string.Empty && ptype != string.Empty) 
             {
-                if (Request.QueryString["type"].Equals("secretary"))
+                if (ptype.Equals("secretary"))
                 {
                     AddNewPatientInfo();
                 }
@@ -62,6 +79,7 @@ namespace DjunWCMS
 
         }
 
+
         void Edit() 
         {
 
@@ -73,13 +91,13 @@ namespace DjunWCMS
             cmd.Parameters.AddWithValue("@dob", clDob.Text);
             cmd.Parameters.AddWithValue("@phone", txtPhone.Text);
             cmd.Parameters.AddWithValue("@notes", txtNoteView.Text);
-            cmd.Parameters.AddWithValue("@id", id);
+         
 
             con.Open();
 
             if (cmd.ExecuteNonQuery() > 0)
             {
-                Console.WriteLine("Inserted correctly");
+                Console.WriteLine("Updated succesfully");
             }
 
             con.Close();
@@ -140,12 +158,13 @@ namespace DjunWCMS
             string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
             SqlConnection con = new SqlConnection(connectionString);
             SqlCommand cmd = con.CreateCommand();
-            cmd.CommandText = " INSERT INTO [account] (account_user_id, account_name, account_type, account_notes, account_creation_date, account_phone) VALUES (@name, @type, @notes, @date, @phone)";
+            cmd.CommandText = " INSERT INTO [account] (account_name, account_type, account_notes, account_creation_date, account_phone) VALUES (@name, @type, @notes, @date, @phone)";
             con.Open(); 
             cmd.Parameters.AddWithValue("@name", txtName.Text);
-            cmd.Parameters.AddWithValue("@type", txtType.Text);
+            cmd.Parameters.AddWithValue("@type", ddlType.SelectedIndex);
             cmd.Parameters.AddWithValue("@notes", txtNotes.Text);
-            cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("MM/dd/aaaa"));
+            cmd.Parameters.AddWithValue("@phone", txtPhone.Text);
+            cmd.Parameters.AddWithValue("@date", DateTime.Now);
 
             if (cmd.ExecuteNonQuery() > 0)
             {
@@ -156,9 +175,16 @@ namespace DjunWCMS
 
         public void GetInfoInDatabaseWithId(string id)
         {
+            if (accountType.Equals("2"))
+            {
+                query = "SELECT *  FROM account WHERE account_type=2";
+            }else
+            {
+                query = "SELECT  user_name, account_name, account_dob, account_phone, account_type, account_notes, account_creation_date FROM [user], account WHERE user_id = account_user_id AND account_id = @id ";
+            }
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString);
             SqlCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT  user_name, account_name, account_dob, account_phone, account_type, account_notes, account_creation_date FROM [user], account WHERE user_id = account_user_id AND account_id = @id ";
+            cmd.CommandText = query;
             cmd.Parameters.AddWithValue("@id", id);
             con.Open();
 
@@ -175,14 +201,14 @@ namespace DjunWCMS
                 txtPhone.Text = reader.GetValue(3).ToString();
 
 
-                if (reader.GetInt32(4).Equals("0"))
-                {
-                    ddlType.Text = "Secretary";
-                }
-                else
-                {
-                    txtType.Text = "Doctor";
-                }
+                //if (reader.GetInt32(4).Equals("0"))
+                //{
+                //    ddlType.Text = "Secretary";
+                //}
+                //else
+                //{
+                //    ddlType.Text = "Doctor";
+                //}
 
                 txtNoteView.Text = reader.GetValue(5).ToString();
                 txtCreate.Text = reader.GetValue(6).ToString();
